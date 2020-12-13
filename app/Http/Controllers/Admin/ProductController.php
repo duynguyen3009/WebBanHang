@@ -12,7 +12,8 @@ use App\Http\Requests\ProductRequest   as MainRequest;
 use App\File;
 use App\Models\PriceProductModel;
 use Illuminate\Support\Facades\Storage;
-
+use DB;
+ 
 class ProductController extends AdminController
 {
    public function __construct()
@@ -111,5 +112,10 @@ class ProductController extends AdminController
    public function addPriceRowNoChangePrice()
    {
       return view($this->pathViewController .  'childs.product_attr_no_change_price_row');
+   }
+   public function updateAttrPrice(Request $request) {
+      $params = json_decode($request->attr_price,true);
+      $result = DB::table('price_product')->where('id',$params['id'])->update(['price' => $params['price']]);
+      if($result) echo true;
    }
 }

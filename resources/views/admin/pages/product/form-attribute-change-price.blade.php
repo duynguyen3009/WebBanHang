@@ -43,12 +43,12 @@
                                     <input type="text" class="form-control" name="price_custom_name[]" value="%s" placeholder="Tên">
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="price_custom_value[]" value="%s" placeholder="Giá">
+                                    <input type="text" class="form-control attribute_price" name="price_custom_value[]" value="%s" placeholder="Giá" data-id="%s">
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="button" class="btn btn-sm btn-danger btn-rounded btn-delete-change-price-edit">X</button>
                                     </div>
-                                    <input type="hidden" name="id_price_product[]" value="%s">
+                                    <input type="hidden" name="id_price_product" value="">
                             </div>
                     ', $itemPriceProduct['attr_value'], $itemPriceProduct['price'], $itemPriceProduct['id']);
             }
@@ -77,12 +77,31 @@
             <button type="button" class="btn btn-success btn-add-attribute-price-edit" style="margin-top: 10px; ">Thêm thuộc tính</button>
         </div>
     @endif
-    
+    <input type="hidden" name="csrf-token" value="{{ Session::token() }}" />
 </div>
 </div>
 
 <script>  
 $(document).ready(function () {
     $('.input-tags-attr').tagsInput();
+    $('.attribute_price').blur(function() {
+        var new_value = $(this).val();
+		var old_value = $(this).attr('value');
+        if(old_value != new_value) {
+            let csrf_token = $("input[name=csrf-token]").val();
+            var attr_price = {};
+            attr_price['id'] = $(this).data('id');
+            attr_price['price'] = new_value;
+            $.ajax({
+				type: "POST",
+				url: "{{route('product/updateAttrPrice')}}",
+                data: {attr_price : JSON.stringify(attr_price)},
+                headers: {'X-CSRF-TOKEN': csrf_token},
+				success: function(result) {
+					if(result) alert('success');
+				}
+			});
+		} 
+    });
 });
 </script>

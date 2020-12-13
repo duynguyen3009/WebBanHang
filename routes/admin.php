@@ -106,6 +106,7 @@ Route::group(['prefix' => $prefixAdmin, 'namespace' => 'Admin', ], function () {
         Route::get('change-type-{type}/{id}',           [ 'as' => $controllerName . '/type',        'uses' => $controller . 'type']);
         Route::get('add-price-row',           [ 'as' => $controllerName . '/add-price-row',        'uses' => $controller . 'addPriceRow']);
         Route::get('add-price-row-no-change-price',           [ 'as' => $controllerName . '/addPriceRowNoChangePrice',        'uses' => $controller . 'addPriceRowNoChangePrice']);
+        Route::post('update-attribute-price',                      [ 'as' => $controllerName . '/updateAttrPrice',      'uses' => $controller . 'updateAttrPrice']);
     });
 // ============================== ARTICLE ================================
     $prefix         = 'article';
