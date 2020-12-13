@@ -21,7 +21,7 @@ class ProductModel extends AdminModel
         $this->controllerName      = 'product';
         $this->folderUpload        = 'product';
         $this->fieldSearchAccepted = ['id', 'name', 'link'];
-        $this->crudNotAccepted     = ['_token', 'attribute_group_change_price', 'price_custom_name', 'price_custom_value', 'id', 'attribute_group', 'id_price_product'];
+        $this->crudNotAccepted     = ['_token', 'attribute_group_change_price', 'price_custom_name', 'price_custom_value', 'id', 'attribute_group', 'id_price_product','csrf-token'];
     }
 
     public function listItems($params = null, $options = null)
