@@ -1,16 +1,15 @@
-@if(count($productFeatured) > 0)
+@if(count($itemsProductFeatured) > 0)
     <div class="featured-products-section carousel-section">
         <div class="container">
-        <h2 class="h3 title mb-4 text-center">Cá nổi bật</h2>
+        <h2 class="h3 title mb-4 text-center">Sản phẩm nổi bật</h2>
             <div class="featured-products owl-carousel owl-theme owl-loaded owl-drag">
                     <div class="owl-stage-outer">
                         <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1418px;">
-                            @foreach($productFeatured as $key => $value)
-                                   
+                            @foreach($itemsProductFeatured as $item)
                                 <div class="owl-item active" style="width: 225.2px; margin-right: 11px;">
                                     <div class="product">
-                                        @include('news.patirials.product.image' ,   ['pageIndex'    => null , 'typeProduct'  => 'featured' ]  )
-                                        @include('news.patirials.product.content' , ['typeProduct'  => null ] )
+                                        @include('news.patirials.product.image' ,   ['item' => $item, 'type'  => 'featured'])
+                                        @include('news.patirials.product.content' , ['item' => $item, 'type'  => 'featured']) 
                                         
                                     </div>
                                 </div>

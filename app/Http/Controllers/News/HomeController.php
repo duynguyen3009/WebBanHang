@@ -40,12 +40,12 @@ class HomeController extends Controller
          $itemsFeedBack     = $feedBackModel ->listItems(null,  [ 'task'=> 'news-list-items']); 
          $itemsMenu         = $menuModel     ->listItems(null,  [ 'task'=> 'front-end-list-items']); 
          $articleFeatured   = $articleModel  ->listItems(null,  [ 'task'=> 'news-list-items-featured']) ;
-         $productFeatured   = $productModel  ->listItems(null,  [ 'task'=>  'news-get-items-featured' ]);
+         $itemsProductFeatured   = $productModel  ->listItems(null,  [ 'task'=>  'news-get-items-featured' ]);
          $productAccessory  = $productModel  ->listItems(null,  [ 'task'=>  'news-get-items-accessory']);
-         $productSale       = $productModel  ->listItems(null,  [ 'task'=>  'news-get-items-sale']);
+         $itemsProductSale       = $productModel  ->listItems(null,  [ 'task'=>  'news-get-items-sale']);
          $partnerThumb      = $partnerModel  ->listItems(null,  [ 'task'=>  'news-list-items']);
          $linkVideo         = $videoModel    ->listItems(null,  [ 'task'=>  'news-list-items']);
-         return view($this->pathViewController .  'index' , compact( 'linkVideo','partnerThumb','itemsSlider','itemsMenu','itemsFeedBack','articleFeatured','productFeatured','productAccessory','productSale') );
+         return view($this->pathViewController .  'index' , compact( 'linkVideo','partnerThumb','itemsSlider','itemsMenu','itemsFeedBack','articleFeatured','itemsProductFeatured','productAccessory','itemsProductSale') );
       }
 
       public function notFound(Request $request)

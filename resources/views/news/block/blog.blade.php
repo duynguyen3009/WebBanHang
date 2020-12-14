@@ -11,9 +11,9 @@
                     @php
                         $id             = $val['id'];
                         $name           = $val['name'];
-                        $content        = Template::showContent($val['content'],234);
+                        $content        = Template::showContent($val['content'],150);
                         $thumb          = url("/images/article") . '/' . $val['thumb'];
-                        $link           =   URL::linkArticle($id, $name) ;
+                        $link           = URL::linkArticle($id, $name) ;
                         $linkReadMore   = URL::linkCategoryArticle($val['category_id'], $val['category_article_name']);
                     @endphp
                     <div class="col-md-3">
@@ -29,14 +29,14 @@
                                     <p style="justify-content: left">{!! $content !!}</p>
                                    
                                 </div>
-                                <a  style="margin-top: 1em;" href="{{ $link  }}" class="btn btn-dark">Đọc ngay</a>
+                                <a  style="margin-top: 1em;" href="{{ $link  }}" class="btn btn-primary">Đọc ngay</a>
                             </div>
                         </div>
                     </div>
                 @endforeach             
             </div>
             <div class="xem-them">
-                <a style="margin-top: 1em; background-color: deeppink; border-radius: 5em; border:none" href="{{ $linkReadMore  }}" class="btn btn-dark">Xem thêm</a>
+                <a style="margin-top: 1em; background-color:darkgoldenrod; border-radius: 5em; border:none" href="{{ $linkReadMore  }}" class="btn btn-dark">Xem thêm</a>
             </div>
         </div>
     </div>

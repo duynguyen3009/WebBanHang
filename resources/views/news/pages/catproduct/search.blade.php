@@ -1,37 +1,34 @@
-
-@section('title', 'Sản phẩm')
+@section('title', 'Tìm kiếm sản phẩm')
 @extends('news.main')
 @section('content')
-    <main class="main" style="background-color: #fff">
-        @php
+<main class="main" style="background-color: #fff">
+    @php
             use  App\Helpers\Template  as Template ;
-            $breadcrumCategory = Template::showBreadcrumProduct(['parent_id' => $params['id']]) ;
-        @endphp
-            @include('news.pages.catproduct.child.breadcrumb')
+            @endphp
+            {{-- @include('news.pages.catproduct.child.breadcrumb') --}}
+        @if (count($itemsSearch) > 0)
         <div class="container">
-            @include('news.pages.catproduct.child.sort')
+            {{-- @include('news.pages.catproduct.child.sort') --}}
+            <h3>Có <span style="color: red">{{count($itemsSearch)}} </span>kết quả được tìm thấy</h3>
             <div class="row row-sm product-list">
-                @foreach($items as $item)
+                @foreach($itemsSearch as $item)
                     <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                         <div class="product">
-                            @include('news.patirials.product.image', ['item' => $item ,'type'  => 'sale' ] )
-                            @include('news.patirials.product.content',['item' => $item ,'type'  => 'sale' ])
+                            @include('news.patirials.product.image', ['item' => $item ,'type'  => 'normal' ] )
+                            @include('news.patirials.product.content',['item' => $item ,'type'  => 'search', 'params' => $params ])
                         </div>
                     </div>
                 @endforeach
             </div>    
-            @if (count($items) > 0)
-                <nav class="toolbox toolbox-pagination">
-                    @include('news.templates.pagination')
-                </nav>  
-            @endif
         </div>
-
+        @else
+        <h3 style="color: red; text-align:center; height: 300px;  line-height: 300px;">Không tìm thấy kết quả</h3>
+        @endif
         <div class="mb-5"></div>
     </main>
+    
+
 @endsection
-
-
 
 
 

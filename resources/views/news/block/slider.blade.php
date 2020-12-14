@@ -17,9 +17,9 @@
                         <div class="row justify-content-end">
                             <div class="col-8 col-md-6 text-center slide-content-right">
                                 <div class="home-slide-content">
-                                    {{-- <h3>up to 70% off</h3> --}}
-                                    {{-- <h1>{{ $name }}</h1> --}}
-                                    {{-- <a href="category.html" class="btn btn-primary">Shop Now</a> --}}
+                                    <h3>{{ $description }}</h3>
+                                    <h1 style="color:rgb(72, 1, 236)">{{ $name }}</h1>
+                                    <a href="category.html" class="btn btn-primary">Xem ngay</a>
                                 </div>
                             </div>
                         </div>

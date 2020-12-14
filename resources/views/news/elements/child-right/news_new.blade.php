@@ -17,13 +17,13 @@
              <li style="border: 1px solid #ccc; padding: 5px">
              <div class="entry-media">
                 <a href="{{ $link }}">
-                      <img src="{{ asset($thumb) }}" alt="{{ $name }}">
+                      <img src="{{ asset($thumb) }}" alt="{{ $name }}" style="height: 80px">
                 </a>
              </div><!-- End .entry-media -->
              <div class="entry-info">
                 <a href="{{ $link }}">{{ $name }}</a>
                 <div class="entry-meta">
-                      {{ $created }}
+                      {!! $content !!}
                 </div><!-- End .entry-meta -->
              </div><!-- End .entry-info -->
           </li>

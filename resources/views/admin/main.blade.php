@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('admin.elements.head')
+  
 </head>
 <body class="nav-md"> 
     {{-- nav-md --}}

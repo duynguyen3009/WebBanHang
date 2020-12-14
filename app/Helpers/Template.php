@@ -333,7 +333,7 @@ class Template {
     }
     public static function showProductThumb ($thumbName , $folder) {
         $xhtml = sprintf(
-            '<img src="%s" alt="product">', asset("uploads/$thumbName")  );
+            '<img src="%s" alt="product" style="width: 400px; height: 200px">', asset("uploads/$thumbName")  );
         return $xhtml;
     }
     public static function NewsGetPricePromotion ($value) {
@@ -357,7 +357,9 @@ class Template {
     }
 
      public static function showPrice($item) {
-        if (isset($item['value_promotion']) && $item['value_promotion'] == 0) { // không khuyến mãi
+         $priceOld  = 0;
+         $price     = 0;
+        if (empty($item['value_promotion']) && $item['promotion'] == 'default') { // không khuyến mãi
             $priceOld = number_format($item['price']) . ' VNĐ';
             $price    = number_format($item['price']) . ' VNĐ';
         }else { // có khuyến mãi

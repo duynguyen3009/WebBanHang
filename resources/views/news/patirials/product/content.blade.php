@@ -1,41 +1,74 @@
 @php    
         use App\Helpers\Template  ;
         use App\Helpers\URL  ;
-        $id         = $value['id'] ;
-        $name      = $value['name'] ;
-        $price     = number_format($value['price'])." VNĐ" ;
-        $priceOld  = null;
-     
-        if($typeProduct == 'sale' && ($value['promotion'] != null) ){
-            $priceOld   = $price ;
-            $price      = Template::NewsGetPricePromotion($value) ;
+        use App\Helpers\Hightlight  ;
+        if ($type == 'search') {
+            $arrPrice   = Template::showPrice($item);
+            $name       = preg_replace("/".preg_quote($params['search'], "/")."/i", "<span class='highlight' style='background-color:yellow'>$0</span>", $item['name']);
+            $price      = $arrPrice['price'];
+            $priceOld   = $arrPrice['priceOld'];
+            $link       =  URL::linkProduct($item['id'], $item['name']);
         }
-        $link = URL::linkProduct($id, $name);
-      
+        if ($type == 'sale') {
+            $arrPrice   = Template::showPrice($item);
+            $name       = $item['name'];
+            $price      = $arrPrice['price'];
+            $priceOld   = $arrPrice['priceOld'];
+            $link       =  URL::linkProduct($item['id'], $item['name']);
+        }
+
+        if ($type == 'featured'|| $type == 'normal') {
+            $arrPrice   = Template::showPrice($item);
+            $name       = $item['name'];
+            $price      = $arrPrice['price'];
+            $priceOld   = $arrPrice['priceOld'];
+            $link       =  URL::linkProduct($item['id'], $item['name']);
+        }
+
+       
 @endphp
 
-<div class="product-details">
-    {{-- <div class="ratings-container">
-        <div class="product-ratings">
-        <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+@if ($type == 'sale')
+    <div class="product-details">
+        <h2 class="product-title">
+            <a href="{{ $link }}">{{ $name }}</a>
+        </h2>
+        <div class="price-box">
+            <span class="old-price">{{ $priceOld}}</span>
+            <span class="product-price">{{ $price}}</span>
         </div>
-    </div> --}}
+        <div class="product-action">
+            <a href="{{ $link }}" class="paction add-cart" title="Xem chi tiết">
+            <span>Xem chi tiết</span>
+            </a>
+        </div>
+    </div>
+@elseif($type == 'featured' || $type == 'normal')
+    <div class="product-details">
+        <h2 class="product-title">
+            <a href="{{ $link }}">{{ $name }}</a>
+        </h2>
+        <div class="price-box">
+            <span class="product-price">{{ $price}}</span>
+        </div>
+        <div class="product-action">
+            <a href="{{ $link }}" class="paction add-cart" title="Xem chi tiết">
+            <span>Xem chi tiết</span>
+            </a>
+        </div>
+    </div>
+@elseif($type == 'search')
+<div class="product-details">
     <h2 class="product-title">
-        <a href="{{ $link }}">{{ $name }}</a>
+        <a href="{{ $link }}">{!! $name !!}</a>
     </h2>
     <div class="price-box">
-        <span class="old-price">{{ $priceOld }}</span>
-        <span class="product-price">{{ $price }}</span>
+        <span class="product-price">{{ $price}}</span>
     </div>
     <div class="product-action">
-        {{-- <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-        <span>Add to Wishlist</span>
-        </a> --}}
         <a href="{{ $link }}" class="paction add-cart" title="Xem chi tiết">
         <span>Xem chi tiết</span>
         </a>
-        {{-- <a href="#" class="paction add-compare" title="Add to Compare">
-        <span>Add to Compare</span>
-        </a> --}}
     </div>
 </div>
+@endif

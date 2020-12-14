@@ -9,35 +9,22 @@
                $name       = substr($item['name'], 0, 25);
                $thumb      = "uploads/" . json_decode($item['thumb'])[0];
                $price      = number_format($item['price']) . ' VNĐ';
-               $link       = URL::linkArticle($item['id'],$item['name']);
-               $promotion  =  $item['value_promotion'];
-               if($item['promotion'] == 'direct'){
-                  $classOldPrice = 'old-price';
-                  $pricePromotion = number_format($item['price'] - $item['value_promotion']) . ' VNĐ';
-               }elseif ($item['promotion'] == 'percent') {
-                  $classOldPrice = 'old-price';
-                  $pricePromotion = number_format(((100 - $item['value_promotion'])/100) * $item['price']). ' VNĐ';
-               }else {
-                  $classOldPrice    = null;
-                  $pricePromotion   = null;
-               }
+               $link       = URL::linkProduct($item['id'],$item['name']);
             @endphp
             <li style="border: 1px solid #ccc; padding: 5px">
                <div class="entry-media">
-                  <a href="single.html">
+                  <a href="{{$link}}">
                         <img src="{{ asset($thumb) }}" alt="Post">
                   </a>
-               </div><!-- End .entry-media -->
+               </div>
                <div class="entry-info">
-               <a href="single.html">{{ $name }}</a>
-               <div class="entry-meta {!! $classOldPrice !!}">
-                     {{ $price }}
-                  </div><!-- End .entry-meta -->
-                  <div class="entry-meta" style="color: red">
-                     {{ $pricePromotion }}
-                  </div><!-- End .entry-meta -->
-               </div><!-- End .entry-info -->
+                  <a href="{{$link}}">{{ $name }}</a>
+                  <div class="entry-meta " >
+                    <h3 style="color: red"> {{ $price }}</h3>
+                  </div>
+               </div>
+               
             </li>
          @endforeach
       </ul>
- </div><!-- End .widget -->
+ </div>

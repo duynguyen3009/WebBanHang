@@ -1,15 +1,15 @@
-@if(count($productSale) > 0)
+@if(count($itemsProductSale) > 0)
     <div class="featured-products-section carousel-section">
         <div class="container">
         <h2 class="h3 title mb-4 text-center">Sản phẩm khuyến mãi</h2>
             <div class="featured-products owl-carousel owl-theme owl-loaded owl-drag">
                     <div class="owl-stage-outer">
                         <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1418px;">
-                            @foreach($productSale as $key => $value)
+                            @foreach($itemsProductSale as $item)
                                 <div class="owl-item active" style="width: 225.2px; margin-right: 11px;">
                                     <div class="product">
-                                        @include('news.patirials.product.image' ,   ['pageIndex'    => null , 'typeProduct'  => 'sale']  )
-                                        @include('news.patirials.product.content' , ['typeProduct'  => 'sale'] ) 
+                                        @include('news.patirials.product.image' ,   ['item' => $item, 'type'  => 'sale'])
+                                        @include('news.patirials.product.content' , ['item' => $item, 'type'  => 'sale']) 
                                     </div>
                                 </div>
                             @endforeach

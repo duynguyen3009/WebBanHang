@@ -22,7 +22,7 @@
             <div class="entry-info">
             <a href="single.html">{{ $name }}</a>
             <div class="entry-meta">
-               {{ $address }}
+              <strong> {{ $address }}</strong>
                </div><!-- End .entry-meta -->
             </div><!-- End .entry-info -->
          </li>

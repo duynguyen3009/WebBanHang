@@ -9,12 +9,15 @@
                     <li><a href="#">Sản phẩm nổi bật</a></li>
                 </ul>
             </div><!-- End .col-sm-6 -->
-            {{-- <div class="col-sm-6">
-                <ul class="links">
-                    <li><a href="#">Powerful Admin Panel</a></li>
-                    <li><a href="#">Mobile & Retina Optimized</a></li>
+            <div class="col-sm-12">
+                <ul class="contact-info">
+                    <li>
+                        <span class="contact-info-label">Thời gian làm việc:</span>
+                        {{ $itemsSetting->time_work }}
+                    </li>
                 </ul>
-            </div><!-- End .col-sm-6 --> --}}
+            </div><!-- End .col-sm-6 -->
+           
         </div><!-- End .row -->
     </div><!-- End .widget -->
 </div>

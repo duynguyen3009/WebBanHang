@@ -17,7 +17,7 @@
                     @foreach ($sortValue as $key => $item)
                         <option value="{{ $key }}" >{{ $item }}</option>
                     @endforeach
-                </select>
+            </select>
             </div><!-- End .select-custom -->
         </div><!-- End .toolbox-item -->
     </div><!-- End .toolbox-left -->

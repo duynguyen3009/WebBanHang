@@ -78,6 +78,7 @@ Route::group(['prefix' =>  $prefix], function () use ($controllerName) {
    ->where('product_id', '[0-9]+');
    Route::get('/{id}/{quantity}/{price}/{priceOld}',  [ 'as' => $controllerName . '/cart', 'uses' => $controller . 'cart' ]);
    Route::get('/detailCart',  [ 'as' => $controllerName . '/detailCart',      'uses' => $controller . 'detailCart' ]);
+   Route::post('/search', [ 'as' => $controllerName . '/search',  'uses' => $controller . 'search']);
    Route::get('/get-price-shipping-{id}', [ 'as' => $controllerName . '/getPriceShipping',  'uses' => $controller . 'getPriceShipping']);
    Route::get('/get-coupon-{coupon}', [ 'as' => $controllerName . '/getCoupon',  'uses' => $controller . 'getCoupon']);
    Route::get('/{id}',        [ 'as' => $controllerName . '/deleteItemCart',  'uses' => $controller . 'deleteItemCart' ]);

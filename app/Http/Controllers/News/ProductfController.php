@@ -121,4 +121,13 @@ class ProductfController extends Controller
       $item             = $couponModel->getItem($params, ['task' => 'front-end-get-item']);
       echo json_encode($item);
    }
+   public function search(Request $request)
+   {
+      $params        = $request->all();
+      $itemsSearch   = $this->model->listItems($params, ['task' => 'front-end-get-product-search']);
+      return view('news.pages.catproduct.search', compact('itemsSearch', 'params'));
+      // $couponModel      = new CouponModel();
+      // $item             = $couponModel->getItem($params, ['task' => 'front-end-get-item']);
+      // echo json_encode($item);
+   }
 }

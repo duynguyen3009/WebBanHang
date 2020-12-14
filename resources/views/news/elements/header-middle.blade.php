@@ -18,9 +18,10 @@
         <div class="header-center">
             <div class="header-search">
                 <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-                <form action="#" method="get">
+                <form action="{{route('productf/search')}}" method="post">
+                    @csrf
                     <div class="header-search-wrapper">
-                        <input type="search" class="form-control" name="q" id="q" placeholder="Tìm kiếm..." required>
+                        <input type="search" class="form-control" name="search" id="search" placeholder="Tìm kiếm..." required>
                         <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
                     </div><!-- End .header-search-wrapper -->
                 </form>

@@ -3,7 +3,7 @@
 @endphp
 <div class="featured-products-section carousel-section">
     <div class="container">
-        <h2 class="h3 title mb-4 text-center">Hình ảnh nổi bật</h2>
+        <h2 class="h3 title mb-4 text-center">Các chủ đề</h2>
         <div class="featured-products owl-carousel owl-theme">    
             @foreach($images as $image)
                 <div class="product">

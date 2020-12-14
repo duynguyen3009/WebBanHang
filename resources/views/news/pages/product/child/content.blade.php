@@ -47,9 +47,9 @@
             <span class="product-price">{{ $price }}</span>
         </div><!-- End .price-box -->
 
-        <div class="product-desc">
+        {{-- <div class="product-desc">
             {!! $content !!}
-        </div><!-- End .product-desc -->
+        </div><!-- End .product-desc --> --}}
 
         <div class="product-filters-container">
             <div class="product-single-filter">

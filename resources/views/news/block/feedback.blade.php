@@ -9,7 +9,7 @@
                 @foreach ($itemsFeedBack as $key => $val)
                     @php
                         $name        = $val['name'];
-                        $description = $val['description'];
+                        $description = substr($val['description'], 0, 150);
                         $combostar   = Template::getStarFeedBack($val['combostar'] ) ;
                         $thumb       = url("/images/feedback") . '/' . $val['thumb'];
                     @endphp
@@ -25,7 +25,7 @@
                                         <span class="ratings" style="width:{{ $combostar }}%;"></span><!-- End .ratings -->
                                     </div>
                                 </div>
-                                <p>{!! $description !!}</p>
+                                <p>{!! $description !!}...</p>
                         
                             </div>
                         </div>

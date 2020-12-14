@@ -58,7 +58,7 @@ class ProductModel extends AdminModel
                 ->leftJoin('category_product as c', 'p.category_product_id', '=', 'c.id')
                 ->where('p.type',   '=', 'featured')
                 ->where('p.status', '=', 'active')
-                ->where('p.category_product_id',   '=', 49)
+                // ->where('p.category_product_id',   '=', 49)
                 ->get()
                 ->toArray();
         }
@@ -73,7 +73,8 @@ class ProductModel extends AdminModel
         if ($options['task'] == "news-get-items-sale") {
             $result = $this->select('p.id', 'p.name', 'p.price', 'p.thumb', 'p.category_product_id', 'promotion', 'value_promotion')
                 ->leftJoin('category_product as c', 'p.category_product_id', '=', 'c.id')
-                ->where('p.promotion',   '<>', NULL)
+                ->where('p.status', '=', 'active')
+                ->where('p.promotion',   '<>', 'default')
                 ->get()
                 ->toArray();
         }
@@ -147,9 +148,16 @@ class ProductModel extends AdminModel
         }
 
         if ($options['task'] == "front-end-get-product-featured") {
-            $result = $this->select('id', 'name', 'price', 'thumb')
+            $result = $this->select('id', 'name', 'price', 'thumb', 'promotion', 'value_promotion')
                 ->where('type', 'featured')
-                ->limit(4)
+                ->where('status', 'active')
+                ->get()
+                ->toArray();
+        }
+        if ($options['task'] == "front-end-get-product-search") {
+            $result = $this->select('id', 'name', 'price', 'thumb', 'promotion', 'value_promotion')
+                ->orWhere('name', 'LIKE',  "%{$params['search']}%")
+                ->where('status', 'active')
                 ->get()
                 ->toArray();
         }
@@ -302,23 +310,23 @@ class ProductModel extends AdminModel
 
         if ($options['task'] == 'edit-item') {
             $valueAttribute = [];
-            if (isset($params['attribute_name_price_custom']) && $params['attribute_name_price_custom'] != null) {
+            // if (isset($params['attribute_name_price_custom']) && $params['attribute_name_price_custom'] != null) {
              
-                $priceProductModel          = new PriceProductModel();
-                $attrGroupModel             = new AttributeGroupModel();
-                $nameAttr                   = $attrGroupModel->getItem($params['attribute_name_price_custom'], ['task' => 'admin-get-item-in-product']);
-                $arrAttrChangePrice         = array_combine($params['price_custom_name'], $params['price_custom_value']);
-                foreach ($arrAttrChangePrice as $valueAttr => $priceAttr) {
-                    $itemsAttrChangePrice      =   [
-                        'id'            => 23, 
-                        'product_id'    => $params['id'], 
-                        'attr_name'     => $nameAttr['name'], 
-                        'attr_value'    => $valueAttr, 
-                        'price'         => $priceAttr
-                    ];
-                }
-                $priceProductModel->saveItem($itemsAttrChangePrice, ['task' => 'edit-item']);
-            }
+            //     $priceProductModel          = new PriceProductModel();
+            //     $attrGroupModel             = new AttributeGroupModel();
+            //     $nameAttr                   = $attrGroupModel->getItem($params['attribute_name_price_custom'], ['task' => 'admin-get-item-in-product']);
+            //     $arrAttrChangePrice         = array_combine($params['price_custom_name'], $params['price_custom_value']);
+            //     foreach ($arrAttrChangePrice as $valueAttr => $priceAttr) {
+            //         $itemsAttrChangePrice      =   [
+            //             'id'            => 23, 
+            //             'product_id'    => $params['id'], 
+            //             'attr_name'     => $nameAttr['name'], 
+            //             'attr_value'    => $valueAttr, 
+            //             'price'         => $priceAttr
+            //         ];
+            //     }
+            //     $priceProductModel->saveItem($itemsAttrChangePrice, ['task' => 'edit-item']);
+            // }
             
 
             if (!empty($params['attribute'])) {
