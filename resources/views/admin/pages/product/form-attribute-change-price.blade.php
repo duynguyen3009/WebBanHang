@@ -18,7 +18,6 @@
     $link                   = route($controllerName . '/getAttributeChangePrice', ['id' => 'new_value']);
     $linkAddRow             = route("$controllerName/add-price-row");
     $xhtml = null;
-   
     if (!isset($item['id'])) {
         $elements = [
             [
@@ -30,6 +29,7 @@
      
         if (isset($item['attribute_name_price_custom'])) {
             $priceCustom            = json_decode($item['price_custom'], true);
+            
             $nameAttrGroup          = $attributeGroup->getItem($item['attribute_name_price_custom'], ['task' => 'admin-get-item-in-product']);
             $xhtml  = null;
             $xhtml .= sprintf('<label id="attribute_name_label" class="label label-success" style="font-size: 16px">%s</label>', $nameAttrGroup['name']);
@@ -43,14 +43,14 @@
                                     <input type="text" class="form-control" name="price_custom_name[]" value="%s" placeholder="Tên">
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control attribute_price" name="price_custom_value[]" value="%s" placeholder="Giá" data-id="%s">
+                                    <input type="text" class="form-control attribute_price" name="price_custom_value[]" value="%s" placeholder="Giá" data-id="%s" data-name="%s">
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="button" class="btn btn-sm btn-danger btn-rounded btn-delete-change-price-edit">X</button>
                                     </div>
                                     <input type="hidden" name="id_price_product" value="">
                             </div>
-                    ', $itemPriceProduct['attr_value'], $itemPriceProduct['price'], $itemPriceProduct['id']);
+                    ', $itemPriceProduct['attr_value'], $itemPriceProduct['price'], $itemPriceProduct['id'],$itemPriceProduct['attr_value']);
             }
         }
     }
@@ -84,6 +84,7 @@
 <script>  
 $(document).ready(function () {
     $('.input-tags-attr').tagsInput();
+    
     $('.attribute_price').blur(function() {
         var new_value = $(this).val();
 		var old_value = $(this).attr('value');
@@ -92,10 +93,20 @@ $(document).ready(function () {
             var attr_price = {};
             attr_price['id'] = $(this).data('id');
             attr_price['price'] = new_value;
+
+            var attr_product = [];
+            $.each( $('.attribute_price'), function( key, value ) {
+                    var tmp = {};
+                    tmp['name'] = $(value).data('name');
+                    tmp['value'] = $(value).val();
+                    attr_product.push(tmp);
+                });
+            var product = Object.assign({}, attr_product);
+            var product_id = $('input[name=id]').val();
             $.ajax({
 				type: "POST",
 				url: "{{route('product/updateAttrPrice')}}",
-                data: {attr_price : JSON.stringify(attr_price)},
+                data: {attr_price : attr_price, product: product, product_id : product_id},
                 headers: {'X-CSRF-TOKEN': csrf_token},
 				success: function(result) {
 					if(result) alert('success');

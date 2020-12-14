@@ -114,8 +114,19 @@ class ProductController extends AdminController
       return view($this->pathViewController .  'childs.product_attr_no_change_price_row');
    }
    public function updateAttrPrice(Request $request) {
-      $params = json_decode($request->attr_price,true);
-      $result = DB::table('price_product')->where('id',$params['id'])->update(['price' => $params['price']]);
+      $params = $request->attr_price;
+      DB::table('price_product')->where('id',$params['id'])->update(['price' => $params['price']]);
+      $product = $request->product;
+      $product_id = $request->product_id;
+      $tmp = [];
+      foreach ($product as $key => $value) {
+         $tmp['name'][] = $value['name'];
+         $tmp['value'][] = $value['value'];
+      }
+      $tmp['name'] = json_encode($tmp['name']);
+      $tmp['value'] = json_encode($tmp['value']);
+      $product = json_encode($tmp);
+      $result = DB::table('product')->where('id',$product_id)->update(['price_custom' => $product]);
       if($result) echo true;
    }
 }
