@@ -217,9 +217,10 @@ class Template {
         $value = ($value == null) ? 'parent_id' : $value ;
         $xhtml = '<select data-url="'.$link.'" class="custom-select form-control col-md-6 col-xs-12" name="'.$value.'">';
         foreach ($itemsCategories as $key => $items){
+          
            if(!empty($item['id']) && $item['id'] == $items['id']) continue;
            $name       = Template::getName($items);
-           if($item['category_id'] == $items['id' ]  || $item['parent_id'] == $items['id' ] || $item['question_id'] == $items['id' ]) {
+           if($item['category_id'] == $items['id' ]  || $item['parent_id'] == $items['id' ] || $item['question_id'] == $items['id' ] || $item['category_product_id'] == $items['id' ]) {
             //  continue;
                 $xhtml .= sprintf('<option selected value="%s" >%s</option>', $items['id'], $name);
            }else{
