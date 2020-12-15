@@ -35,7 +35,9 @@ class ProductModel extends AdminModel
             if ($params['filter']['status'] !== "all") {
                 $query->where('product.status', '=', $params['filter']['status']);
             }
-
+            if ( $params['filter']['category'] !== "default" )  {
+                $query->where('product.category_product_id', '=', $params['filter']['category'] );
+            }
             if ($params['search']['value'] !== "") {
                 if ($params['search']['field'] == "all") {
                     $query->where(function ($query) use ($params) {
@@ -260,7 +262,10 @@ class ProductModel extends AdminModel
             self::where('id', $params['id'])->update(['type' => $params['currentType']]);
             return ['message' => config('zvn-notify.select.message')];
         }
-
+        if($options['task'] == 'change-category') {
+            self::where('id', $params['id'])->update(['category_product_id' => $params['currentCategory']]);
+            return [ 'message' => config('zvn-notify.select.message')] ;
+        }
         if ($options['task'] == 'add-item') {
             $valueAttribute = [];
             if (!empty($params['attribute'])) {

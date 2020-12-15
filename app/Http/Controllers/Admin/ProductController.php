@@ -129,4 +129,12 @@ class ProductController extends AdminController
       $result = DB::table('product')->where('id',$product_id)->update(['price_custom' => $product]);
       if($result) echo true;
    }
+   public function category(Request $request) {
+       
+      $params["currentCategory"]    = $request->category;
+      $params["id"]             = $request->id;
+      $items = $this->model->saveItem($params, ['task' => 'change-category']);
+      echo json_encode($items) ;
+      // return redirect()->route($this->controllerName)->with("zvn_notify", "Cập nhật kiểu bài viết thành công!");
+  }
 }

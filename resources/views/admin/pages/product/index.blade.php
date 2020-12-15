@@ -1,8 +1,12 @@
 @extends('admin.main')
 @php
     use App\Helpers\Template as Template;
+    use App\Models\CategoryProductModel  ;
     $xhtmlButtonFilter = Template::showButtonFilter($controllerName, $itemsStatusCount, $params['filter']['status'], $params['search']);
     $xhtmlAreaSeach    = Template::showAreaSearch($controllerName, $params['search']);
+    $categoryModel = new CategoryProductModel();
+    $itemSelectBox      = $categoryModel->listItems(null,['task' => 'admin-list-nested']);
+    $xhtmlSelectBox  = Template::showSelectBoxProductNested($items,$itemSelectBox,'cat_filter',$params['filter']['category']);
 @endphp
 
 @section('content')
@@ -18,6 +22,9 @@
                     <div class="row">
                         <div class="col-md-7">{!! $xhtmlButtonFilter !!}</div>
                         <div class="col-md-5">{!! $xhtmlAreaSeach !!}</div>
+                        <div class="row">
+                            <div class="col-md-3">{!! $xhtmlSelectBox !!}</div>
+                        </div>
                     </div>
                 </div>
             </div>

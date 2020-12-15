@@ -29,7 +29,7 @@
                             $name                   = Hightlight::show($val['name'], $params['search'], 'name');
                             $thumb                  = Template::showItemThumbUpload($thumb, $val['name']);
                             $price                  = number_format($val['price']) . ' VNĐ';
-                            $categoryProductName    = $val['category_product_name'];
+                            $categoryProductName    = SelectBox::showCategoryProductChangeAjax($controllerName, $val , $val['category_product_id'],'category');
                             $type                   = SelectBox::showItemSelect($controllerName, $id, $val['type'], 'type');
                             $status                 = Template::showItemStatus($controllerName, $id, $val['status']); ;
                             $createdHistory         = Template::showItemHistory($val['created_by'], $val['created']);
