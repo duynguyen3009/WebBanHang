@@ -260,7 +260,10 @@ class ProductModel extends AdminModel
             self::where('id', $params['id'])->update(['type' => $params['currentType']]);
             return ['message' => config('zvn-notify.select.message')];
         }
-
+        if($options['task'] == 'change-category') {
+            self::where('id', $params['id'])->update(['category_product_id' => $params['currentCategory']]);
+            return [ 'message' => config('zvn-notify.select.message')] ;
+        }
         if ($options['task'] == 'add-item') {
             $valueAttribute = [];
             if (!empty($params['attribute'])) {

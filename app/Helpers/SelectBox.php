@@ -4,6 +4,7 @@ namespace App\Helpers;
 use Illuminate\Support\Str;
 use Config;
 use App\Models\CategoryArticleModel  ;
+use App\Models\CategoryProductModel  ;
 use App\Models\CategoryQuestionModel  ;
 use App\Helpers\Template as Template;
 class SelectBox
@@ -53,6 +54,14 @@ class SelectBox
     {
 
         $categoryModel = new CategoryArticleModel();
+        $itemSelectBox  = $categoryModel->listItems(null,['task' => 'admin-list-nested']);
+        $link          = route($controllerName . '/' . $fieldName, [$fieldName => 'new_value', 'id' => $items['id'] ]);
+        return $xhtml = Template::showSelectBoxCategoryNested($items ,$itemSelectBox,'category_id',$link);
+    }
+    public static function showCategoryProductChangeAjax($controllerName, $items, $categoryID, $fieldName)
+    {
+
+        $categoryModel = new CategoryProductModel();
         $itemSelectBox  = $categoryModel->listItems(null,['task' => 'admin-list-nested']);
         $link          = route($controllerName . '/' . $fieldName, [$fieldName => 'new_value', 'id' => $items['id'] ]);
         return $xhtml = Template::showSelectBoxCategoryNested($items ,$itemSelectBox,'category_id',$link);
