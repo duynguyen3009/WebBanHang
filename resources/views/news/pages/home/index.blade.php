@@ -14,7 +14,7 @@
     @include('news.block.productAcquatic')
     @include('news.block.feedback')       
     @include('news.block.blog')       
-    @include('news.block.partner')       
+    {{-- @include('news.block.partner')        --}}
     @include('news.block.video')       
 </main> 
 @endsection

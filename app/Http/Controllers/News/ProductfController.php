@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductModel;
 use App\Models\ShippingModel;
 use App\Models\CouponModel;
+use App\Models\PriceProductModel;
 use function GuzzleHttp\json_decode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -21,7 +22,8 @@ class ProductfController extends Controller
    public function __construct()
    {
       view()->share('controllerName', $this->controllerName);
-      $this->model = new ProductModel();
+      $this->model               = new ProductModel();
+      $this->priceProductModel   = new PriceProductModel();
    }
 
    public function index(Request $request)
@@ -36,8 +38,9 @@ class ProductfController extends Controller
    public function cart(Request $request)
    {
       $cart = Session::get('cart');
-      $productId = $request->id;
-      $quantity = $request->quantity;
+      $productId        = $request->id;
+      $priceProductId   = $request->id_price_product;
+      $quantity         = $request->quantity;
       $checkExistId = false;
       if (empty($cart)) {
          $cart['quantity'][$productId] = $quantity;
@@ -52,8 +55,10 @@ class ProductfController extends Controller
       }
 
       session(['cart' => $cart]);
-      $item = $this->model->getItem(['id' => $productId], ['task' => 'get-product-in-cart']);
-      $price = Template::showPrice($item);
+      $item    = $this->model->getItem(['id' => $productId],                  ['task' => 'get-product-in-cart']);
+      $price   = $this->priceProductModel->getItem(['id' => $priceProductId], ['task' => 'get-item']);
+     
+      // $price = Template::showPrice($item);
       echo json_encode([
          'checkId' => $checkExistId,
          'message' => config('zvn-notify.cart.message'),

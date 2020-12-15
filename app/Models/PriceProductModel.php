@@ -23,6 +23,7 @@ class PriceProductModel extends AdminModel
             ->get()
             ->toArray();
         }
+       
 
         return $result;
     }

@@ -35,12 +35,15 @@ $(document).ready(function () {
     // THÊM VÀO GIỎ HÀNG
     $('.add-cart').click(function (e) {
         e.preventDefault();
-        id = $('.id_product').val();
-        quantity = $('.quantity').val();
-        price = $('.price_product').val().slice(0, -4).replace(/,/g, '');
-        priceOld = $('.price_old_product').val().slice(0, -4).replace(/,/g, '');
+        priceOld = 0;
+        id                  = $('.id_product').val();
+        idPriceProduct      = $('input:hidden[name=id_price_product]').val();
+        quantity            = $('.quantity').val();
+        price               = $('.price_product').val().slice(0, -4).replace(/,/g, '');
+        priceOld            = $('.price_old_product').val().slice(0, -4).replace(/,/g, '');
         url = $(this).data("url");
         url = url.replace("new_value", id);
+        url = url.replace("new_value", idPriceProduct);
         url = url.replace("new_value", quantity);
         url = url.replace("new_value", price);
         url = url.replace("new_value", priceOld);
@@ -49,13 +52,12 @@ $(document).ready(function () {
             type: "GET",
             dataType: "json",
             success: function (result) {
-                console.log(result);
-                let message = result.message;
-                let quantity = result.quantity;
-                let name = result.name;
-                let price = result.price;
-                let product_id = result.product_id;
-                let thumb = result.thumb;
+                let message     = result.message;
+                let quantity    = result.quantity;
+                let name        = result.name;
+                let price       = result.price;
+                let product_id  = result.product_id;
+                let thumb       = result.thumb;
                 $.notify(message, { className: "success", position: "left top" });
                 let totalQuantityCart = parseInt($('.cart-count').html());
                 let totalQuantityCartUpdate = totalQuantityCart + parseInt(quantity);
@@ -192,13 +194,13 @@ $(document).ready(function () {
                 if (result != null) {
                     let fee = parseInt(result.price).toLocaleString() + ' VNĐ';
                     $('.fee').html(fee + `<input type="hidden" name="fee" value="${parseInt(result.price)}" >`);
-                    let subTotal    = $('input:hidden[name=subtotal]').val();
+                    let subTotal = $('input:hidden[name=subtotal]').val();
                     let feeShipping = $('input:hidden[name=fee]').val();
                     let totalCheckout = (parseInt(subTotal) + parseInt(feeShipping)).toLocaleString() + ' VNĐ';
                     $('.total-checkout').html(totalCheckout + `<input type="hidden" name="total-checkout" value="${(parseInt(subTotal) + parseInt(feeShipping))}" >`);
                 } else {
-                    let subTotal    = $('input:hidden[name=subtotal]').val();
-                    $('.fee').html(0 + ' VNĐ'+ `<input type="hidden" class="fee" value="0" >`);
+                    let subTotal = $('input:hidden[name=subtotal]').val();
+                    $('.fee').html(0 + ' VNĐ' + `<input type="hidden" class="fee" value="0" >`);
                     $('.total-checkout').html(parseInt(subTotal).toLocaleString() + ' VNĐ' + `<input type="hidden" name="total-checkout" value="${(parseInt(subTotal))}" >`);
                 }
 
@@ -207,11 +209,11 @@ $(document).ready(function () {
     });
 
     // LẤY GIÁ TRỊ COUPON Ở TRANG CHI TIẾT GIỎ HÀNG
-    $('.btn-apply-coupon').click(function (e) { 
+    $('.btn-apply-coupon').click(function (e) {
         e.preventDefault();
-        let coupon  = $('.coupon').val();
-        url         = $(this).data("url");
-        url         = url.replace("new_value", coupon);
+        let coupon = $('.coupon').val();
+
+        url = url.replace("new_value", coupon);
         $.ajax({
             url: url,
             type: "GET",
@@ -220,7 +222,7 @@ $(document).ready(function () {
                 if (result == null) {
                     $('.alert-coupon').html('Thất bại ! Mã giảm giá không hợp lệ!');
                     $('.coupon').html('0 VNĐ' + `<input type="hidden" class="coupon" value="0" >`);
-                }else{
+                } else {
                     $('.alert-coupon').html('Thành công ! Mã giảm giá  hợp lệ!');
                     console.log(result.type_coupon);
                     if (result.type_coupon == 'direct') {
@@ -232,9 +234,24 @@ $(document).ready(function () {
                         let priceCoupon = parseInt((result.value) * totalCheckout) / 100;
                         $('.coupon').html(priceCoupon.toLocaleString() + ' VNĐ' + `<input type="hidden" class="coupon" value="${priceCoupon}" >`);
                     }
-                   
+
                 }
             }
         })
+    });
+
+    // THAY ĐỔI GIÁ Ở TRANG CHI TIẾT SẢN PHẨM
+    $('.btn-attribute').click(function (e) {
+        e.preventDefault();
+        $( "a.name-attribute" ).each(function( index, element ) {
+            $(element).removeAttr('style');
+        });
+        id = $(this).data("id");
+        $('input:hidden[name=id_price_product]').val(id);
+        $('.attribute-' + id).css("background-color", "yellow");
+        price = $(this).data("price");
+        $('.product-price-detail').html(price.toLocaleString() + ' VNĐ');
+        $(':hidden.price_product').val(price.toLocaleString() + ' VNĐ');
+        // console.log(price);
     });
 }); 

@@ -40,7 +40,7 @@ class ProductModel extends AdminModel
                 if ($params['search']['field'] == "all") {
                     $query->where(function ($query) use ($params) {
                         foreach ($this->fieldSearchAccepted as $column) {
-                            $query->orWhere($column, 'LIKE',  "%{$params['search']['value']}%");
+                            $query->orWhere('product.'.$column, 'LIKE',  "%{$params['search']['value']}%");
                         }
                     });
                 } else if (in_array($params['search']['field'], $this->fieldSearchAccepted)) {
@@ -48,7 +48,7 @@ class ProductModel extends AdminModel
                 }
             }
 
-            $result =  $query->orderBy('id', 'desc')
+            $result =  $query->orderBy('product.id', 'desc')
                 ->paginate($params['pagination']['totalItemsPerPage']);
         }
 
