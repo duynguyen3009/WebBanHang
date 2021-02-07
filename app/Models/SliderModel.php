@@ -115,7 +115,7 @@ class SliderModel extends AdminModel
         }
 
         if($options['task'] == 'add-item') {
-            $params['created_by'] = "hailan";
+            $params['created_by'] = "duy-nguyen";
             $params['created']    = date('Y-m-d');
             $params['thumb']      = $this->uploadThumb($params['thumb']);
             self::insert($this->prepareParams($params));        
@@ -126,7 +126,7 @@ class SliderModel extends AdminModel
                 $this->deleteThumb($params['thumb_current']);
                 $params['thumb'] = $this->uploadThumb($params['thumb']);
             }
-            $params['modified_by']   = "hailan";
+            $params['modified_by']   = "duy-nguyen";
             $params['modified']      = date('Y-m-d');
             self::where('id', $params['id'])->update($this->prepareParams($params));
         }

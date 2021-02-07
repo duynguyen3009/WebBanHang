@@ -13,7 +13,6 @@
     $attributeNamePriceCustom   = $item['attribute_name_price_custom'];
 
     //XỬ LÝ GIÁ KHI CÓ VÀ KHÔNG CÓ KHUYẾN MÃI
-
     $arrPrice   = Template::showPrice($item);
     $priceOld   = $arrPrice['priceOld'];
     $price      = $arrPrice['price'];
@@ -69,13 +68,14 @@
                         $itemsAttr = $priceProductModel->listItems($params, ['task'=> 'list-item-by-product_id']);
                     @endphp
                 <ul class="config-size-list">
-                    @foreach ($itemsAttr as $item)
-                        <li class="btn-attribute attribute"  data-id="{{$item['id']}}"  data-price="{{$item['price']}}">
-                            <a class="attribute-{{$item['id']}} name-attribute" href="#">{{$item['attr_value']}}</a>
+                    @foreach ($itemsAttr as $key => $item)
+                        <li class="btn-attribute attribute"  name="{{$item['attr_name']}}"  data-id="{{$item['id']}}"  data-price="{{$item['price']}}">
+                            <a id="attribute-product" class="attribute-{{$item['id']}} name-attribute @if ($key == 0) bg-success @endif" href="#">{{$item['attr_value']}}</a>
                         </li>
-                        @endforeach
-                        <input type="hidden" name="id_price_product" class="id_price_product" value="">
-                    </ul><br>
+                        
+                    @endforeach
+                        <input type="hidden" name="id_price_product" class="id_price_product" value="{{ $itemsAttr[0]['id'] }}">
+                </ul><br>
                 {{-- @if (isset($item['price_custom']) && $item['price_custom'] !== null && $item['attribute'] == null)
                     <label>{!! $attributeNamePriceCustom !!}</label>
                     <ul class="config-size-list">
@@ -108,11 +108,7 @@
             </div><!-- End .product-single-qty -->
             @php
                $linkCart = route($controllerName .'/cart', [
-                                'id'                    =>  'new_value',
-                                'id_price_product'      =>  'new_value',
-                                'quantity'              =>  'new_value',
-                                'price'                 =>  'new_value',
-                                'priceOld'              =>  'new_value',
+                                'id'                    =>  'new_value'
                             ]);
             @endphp
             <a href="#" class="paction add-cart" data-url="{{ $linkCart }}" title="Thêm vào giỏ hàng">

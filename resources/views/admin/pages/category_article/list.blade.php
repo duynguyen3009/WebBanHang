@@ -15,7 +15,7 @@
                     <th class="column-title">Sắp xếp</th>
                     <th class="column-title">Hiển thị trang chủ</th>
                     <th class="column-title">Trạng thái</th>
-                    <th class="column-title">Đường dẫn</th>
+                    {{-- <th class="column-title">Đường dẫn</th> --}}
                     <th class="column-title">Hành động</th>
                 </tr>
             </thead>
@@ -34,13 +34,13 @@
                             $listBtnAction   = Template::showButtonAction($controllerName, $id);
                         @endphp
 
-                        <tr class="{{ $class }} pointer">
+                        <tr class="{{ $class }} pointer" style="text-align: center">
                             <td>{{ $index }}</td>
                             <td> {!! $name !!}</td>
                             <td> {!! $ordering !!}</td>
                             <td>{!! $isHome !!}</td>
                             <td>{!! $status !!}</td>
-                            <td>{!! $link !!}</td>
+                            {{-- <td>{!! $link !!}</td> --}}
                    
                             <td class="last">{!! $listBtnAction !!}</td>
                         </tr>

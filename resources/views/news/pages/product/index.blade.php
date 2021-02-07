@@ -1,6 +1,14 @@
-@php
-   //  session()->forget('cart'); 
-@endphp
+<style>
+   #attribute-product {
+      background: blue;
+      color: white;
+      width: 100px; 
+      border-radius: 5px;
+   }
+   #attribute-product:hover {
+      background: #0af30a;
+   }
+</style>
 @section('title', 'Chi tiết sản phẩm')
 @extends('news.main')
 @section('content')

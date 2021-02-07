@@ -31,7 +31,10 @@ class ProductModel extends AdminModel
         if ($options['task'] == "admin-list-items") {
             $query = $this->select('product.id', 'product.name', 'promotion', 'value_promotion', 'product.attribute', 'product.price', 'product.thumb', 'product.status', 'product.type', 'category_product_id', 'cp.name as category_product_name')
                 ->leftJoin('category_product as cp', 'product.category_product_id', '=', 'cp.id');
-
+            // echo '<pre>';
+            // print_r($params);
+            // echo '</pre>';
+            // die();
             if ($params['filter']['status'] !== "all") {
                 $query->where('product.status', '=', $params['filter']['status']);
             }

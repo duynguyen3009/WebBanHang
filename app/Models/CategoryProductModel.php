@@ -15,15 +15,41 @@ class CategoryProductModel extends AdminModel
     protected  $fieldSearchAccepted     = ['id', 'name']; 
     protected  $fillable                = ['name', 'status', 'ordering' ,'link','is_home'];
     protected  $crudNotAccepted         = ['_token', 'id'];
-  
-
+    
+    
     public function listItems($params = null, $options = null) {
-     
+        
         $result = null;
-
         if($options['task'] == "admin-list-nested") {
-           return $categories = self::defaultOrder()->withDepth()->having('depth', '>', 0)->get()->toFlatTree();
+            $query = self::defaultOrder()->withDepth()->having('depth', '>', 0)->get()->toFlatTree();
+           if ($params['filter']['status'] !== "all")  {
+               $query->where('status', '=', $params['filter']['status'] );
+           }
+           return $query;
+           echo '<pre>';
+           print_r($query);
+           echo '</pre>';
+                            
         }
+    
+        // if ( $params['filter']['category'] !== "default" )  {
+        //     $query->where('a.category_id', '=', $params['filter']['category'] );
+        // }
+ 
+        // if ($params['search']['value'] !== "")  {
+        //     if($params['search']['field'] == "all") {
+        //         $query->where(function($query) use ($params){
+        //             foreach($this->fieldSearchAccepted as $column){
+        //                 $query->orWhere('a.' . $column, 'LIKE',  "%{$params['search']['value']}%" );
+        //             }
+        //         });
+        //     } else if(in_array($params['search']['field'], $this->fieldSearchAccepted)) { 
+        //         $query->where('a.' . $params['search']['field'], 'LIKE',  "%{$params['search']['value']}%" );
+        //     } 
+        // }
+    
+        // $result =  $query->orderBy('a.id', 'desc')
+        //                 ->paginate($params['pagination']['totalItemsPerPage']);
 
       
         // GET MENU CHILREN IN FRONT END

@@ -43,13 +43,19 @@ $(document).ready(function () {
         priceOld            = $('.price_old_product').val().slice(0, -4).replace(/,/g, '');
         url = $(this).data("url");
         url = url.replace("new_value", id);
-        url = url.replace("new_value", idPriceProduct);
-        url = url.replace("new_value", quantity);
-        url = url.replace("new_value", price);
-        url = url.replace("new_value", priceOld);
+        // url = url.replace("new_value", idPriceProduct);
+        // url = url.replace("new_value", quantity);
+        // url = url.replace("new_value", price);
+        // url = url.replace("new_value", priceOld);
         $.ajax({
             url: url,
             type: "GET",
+            data: {
+                id_price_product: idPriceProduct,
+                quantity: quantity,
+                price: price,
+                priceOld: priceOld
+            },
             dataType: "json",
             success: function (result) {
                 let message     = result.message;
@@ -248,7 +254,9 @@ $(document).ready(function () {
         });
         id = $(this).data("id");
         $('input:hidden[name=id_price_product]').val(id);
-        $('.attribute-' + id).css("background-color", "yellow");
+        // $('.attribute-' + id).css("background-color", "#0af30a");
+        $('.name-attribute').removeClass('bg-success');
+        $('.attribute-' + id).addClass("bg-success");
         price = $(this).data("price");
         $('.product-price-detail').html(price.toLocaleString() + ' VNĐ');
         $(':hidden.price_product').val(price.toLocaleString() + ' VNĐ');

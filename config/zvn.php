@@ -135,6 +135,8 @@ return [
             'product'           => ['name'],
             'tag'               => ['name'],
             'categoryProduct'   => ['name'],
+            'categoryArticle'   => ['name'],
+            'categoryQuestion'  => ['name'],
         ],
         'button' => [
             'default'           => ['edit', 'delete'],

@@ -13,7 +13,13 @@
         <h3>Menu</h3>
         <ul class="nav side-menu">
             <li><a href="{{ route('dashboard')  }}"><i class="fa fa-home">          </i> Trang quản lý          </a></li>
-            <li><a href="{{ route('intro')      }}"><i class="fa fa-info">          </i> Giới thiệu             </a></li>
+            {{-- <li><a href="{{ route('intro')      }}"><i class="fa fa-info">          </i> Giới thiệu             </a></li> --}}
+            <li><a><i class="fa fa fa-info"></i> Giới thiệu <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <li><a href="{{ route('categoryArticle')}}"></i> Nội dung </a></li>
+                    <li><a href="{{ route('article')}}"></i> Người sáng lập     </a></li>
+                </ul>
+            </li>
             <li><a href="{{ route('menu')       }}"><i class="fa fa-th-list">       </i> Menu    </a></li>
             <li><a href="{{ route('slider')     }}"><i class="fa fa-sliders">       </i> Silders                </a></li>
             <li><a><i class="fa fa fa-building-o"></i> Danh mục bài viết <span class="fa fa-chevron-down"></span></a>

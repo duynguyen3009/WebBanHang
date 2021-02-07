@@ -9,9 +9,10 @@
                 <tr class="headings">
                     <th class="column-title">#</th>
                     <th class="column-title">Slider Info</th>
+                    <th class="column-title">Hình ảnh</th>
                     <th class="column-title">Trạng thái</th>
-                    <th class="column-title">Tạo mới</th>
-                    <th class="column-title">Chỉnh sửa</th>
+                    {{-- <th class="column-title">Tạo mới</th>
+                    <th class="column-title">Chỉnh sửa</th> --}}
                     <th class="column-title">Hành động</th>
                 </tr>
             </thead>
@@ -38,12 +39,12 @@
                                 <p><strong>Name:</strong> {!! $name !!}</p>
                                 <p><strong>Description:</strong> {!! $description!!}</p>
                                 <p><strong>Link:</strong> {!! $link !!}</p>
-                                <p>{!! $thumb !!}</p>
                             </td>
-                            <td>{!! $status !!}</td>
-                            <td>{!! $createdHistory !!}</td>
-                            <td>{!! $modifiedHistory !!}</td>
-                            <td class="last">{!! $listBtnAction !!}</td>
+                            <td width="10%">{!! $thumb !!}</td>
+                            <td width="20%" style="text-align: center">{!! $status !!}</td>
+                            {{-- <td>{!! $createdHistory !!}</td>
+                            <td>{!! $modifiedHistory !!}</td> --}}
+                            <td class="last" style="text-align: center">{!! $listBtnAction !!}</td>
                         </tr>
                     @endforeach
                 @else

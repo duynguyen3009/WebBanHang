@@ -34,7 +34,7 @@
                             $modifiedHistory = Template::showItemHistory($val['modified_by'], $val['modified']);
                             $listBtnAction   = Template::showButtonAction($controllerName, $id);
                         @endphp
-                        <tr class="{{ $class }} pointer">
+                        <tr class="{{ $class }} pointer" style="text-align: center">
                             <td >{{ $index }}</td>
                             <td width="40%">
                                 <p><strong>Câu hỏi:</strong> {!! $question !!}</p>

@@ -15,7 +15,17 @@ class SettingModel extends AdminModel
         $this->fieldSearchAccepted = ['link',]; 
         $this->crudNotAccepted     = ['_token'];
     }
-    
+    public function listItems($params = null, $options = null) {
+        $result = null;
+
+        if($options['task'] == 'front-end-list-item') {
+            $result = $this->select('id', 'key_value', 'value')
+            ->where('key_value', 'general')
+            ->first()
+            ->toArray();
+        }
+        return $result;
+    }
     public function getItem($params = null, $options = null) { 
         $result = null;
         if($options['task'] == 'get-item') {
@@ -55,7 +65,7 @@ class SettingModel extends AdminModel
             $data = [
                 'key_value'   =>  $key_value ,
                 'value'       =>  $value ,
-                'created_by' => "truogdinh",
+                'created_by' => "duy-nguyen",
                 'created'    => date('Y-m-d'),
             ];
             self::insert($data);        
@@ -81,7 +91,7 @@ class SettingModel extends AdminModel
             }
             $data = [
                 'value'       =>  $value ,
-                'created_by' => "truogdinh",
+                'created_by' => "duy-nguyen",
                 'created'    => date('Y-m-d'),
             ];
             self::where('key_value', $key_value )->update($data);
