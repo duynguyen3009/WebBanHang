@@ -26,6 +26,16 @@ Route::group(['prefix' => '', 'namespace' => 'news'], function () {
       Route::get('/',   [ 'as' => $controllerName.'news', 'uses' => $controller . 'index' ]);
       Route::post('/postContact',   [ 'as' => $controllerName.'/postContact',  'uses' => $controller . 'postContact' ]);
    }); 
+//============================== CHECKOUT    ==============================
+   $prefix         = 'dat-hang';
+   $controllerName = 'checkout';
+   Route::group(['prefix' =>  $prefix], function () use ($controllerName) {
+      $controller = ucfirst($controllerName)  . 'Controller@';
+      // Route::get('/{total}',   [ 'as' => $controllerName.'news', 'uses' => $controller . 'index' ]);
+      Route::get('/',   [ 'as' => $controllerName.'news', 'uses' => $controller . 'index' ]);
+      Route::get('/checkout',   [ 'as' => $controllerName.'/checkout', 'uses' => $controller . 'checkout' ]);
+      Route::get('/maintenance', [ 'as' => $controllerName . '/maintenance',  'uses' => $controller . 'maintenance' ]);
+   }); 
 // ============================= ARTICLE ===============================
    $prefix         = '';
    $controllerName = 'article';
@@ -85,13 +95,14 @@ Route::group(['prefix' =>  $prefix], function () use ($controllerName) {
    ->where('product_name', '[0-9a-zA-Z_-]+')
    ->where('product_id', '[0-9]+');
    // Route::get('/{id}/{id_price_product}/{quantity}/{price}/{priceOld}',  [ 'as' => $controllerName . '/cart', 'uses' => $controller . 'cart' ]);
-   Route::get('/cart-{id}',  [ 'as' => $controllerName . '/cart', 'uses' => $controller . 'cart' ]);
+   Route::get('/cart-{id}-{id_attribute}-{quantity}',  [ 'as' => $controllerName . '/cart', 'uses' => $controller . 'cart' ]);
+   Route::get('/deleteItem-{id_attribute?}-{id?}-{quantity?}',        [ 'as' => $controllerName . '/deleteItemCart',  'uses' => $controller . 'deleteItemCart' ]);
    Route::get('/detailCart',  [ 'as' => $controllerName . '/detailCart',      'uses' => $controller . 'detailCart' ]);
    Route::post('/search', [ 'as' => $controllerName . '/search',  'uses' => $controller . 'search']);
    Route::get('/get-price-shipping-{id}', [ 'as' => $controllerName . '/getPriceShipping',  'uses' => $controller . 'getPriceShipping']);
    Route::get('/get-coupon-{coupon}', [ 'as' => $controllerName . '/getCoupon',  'uses' => $controller . 'getCoupon']);
-   Route::get('/{id}',        [ 'as' => $controllerName . '/deleteItemCart',  'uses' => $controller . 'deleteItemCart' ]);
-   Route::get('/{id}/{quantity}',        [ 'as' => $controllerName . '/updateQuantity',  'uses' => $controller . 'updateQuantity' ]);
+   Route::get('/update-quantity-{id}-{quantity}-{id_attribute}',        [ 'as' => $controllerName . '/updateQuantity',  'uses' => $controller . 'updateQuantity' ]);
+  
    
 });
 

@@ -5,19 +5,15 @@
    $productModel = new ProductModel();
    $linkDeleteProduct = route('productf/deleteItemCart', ['id' => 'new_value']);
    $linkCart   = route('productf/detailCart');
-   if (!empty(session('cart'))) {
-      $cart       = session('cart')['quantity'];
-   }else {
-      $cart = [];
-   }
-   unset($cart['assets']);
    $totalQuantity      = 0;
-   foreach ($cart as $id => $quantity) {
-      $totalQuantity = $totalQuantity +  $quantity;
-   }
+   // dd(session('cart'));
+   // $cart          =  isset(session('cart')) ? session('cart') : null;
+   $totalQuantity    = Template::countTotalQuantity(session('cart'));
    
 @endphp
-
+{{-- <div class="dropdown-cart-action">
+   <a href="{{ $linkCart }}" class="btn">Xem chi tiết giỏ hàng</a>
+</div> --}}
 <div class="dropdown cart-dropdown">
    <a href="{{ $linkCart }}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
    <span class="cart-count">{{ $totalQuantity }}</span>
@@ -25,7 +21,7 @@
    <div class="message-cart"></div>
    <div class="dropdown-menu" >
       <div class="dropdownmenu-wrapper">
-         <div class="dropdown-cart-products">
+         {{-- <div class="dropdown-cart-products">
             @foreach ($cart as $id => $quantity)
             @php
                $item          = $productModel->getItem($id ,['task' => 'get-product-in-cart']) ;
@@ -50,23 +46,15 @@
                   <a href="{{ $linkProduct }}" class="product-image">
                   <img src="{{ asset($thumb) }}" alt="{{ $name }}">
                   </a>
-                  {{-- <input type="hidden" class="product-cart-hover" value="{{ $id }}"> --}}
                   <a href="#" class="btn-remove remove-product-hover" data-url="{{$linkDeleteProduct}}" data-id="{{ $id }}" title="Xóa sản phẩm"><i class="icon-cancel"></i></a>
                </figure>
             </div>
             @endforeach
-         </div>
-         <!-- End .cart-product -->
-         {{-- 
-         <div class="dropdown-cart-total">
-            <span>Total</span>
-            <span class="cart-total-price">$134.00</span>
-         </div>
-         --}}
+         </div> --}}
+        
          <!-- End .dropdown-cart-total -->
             <div class="dropdown-cart-action">
                <a href="{{ $linkCart }}" class="btn">Xem chi tiết giỏ hàng</a>
-               {{-- <a href="checkout-shipping.html" class="btn">Checkout</a> --}}
             </div>
            
       </div>

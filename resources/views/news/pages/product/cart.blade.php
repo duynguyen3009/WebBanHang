@@ -1,14 +1,15 @@
 
 @section('title', 'Giỏ hàng')
+
 @extends('news.main')
 @section('content')
 <main class="main" style="background-color: #fff">
     @include('news.pages.product.child-cart.breadcrumb')
    <div class="container" style="margin-top: 20px">
-      @if (count($cart['quantity']) > 0)
+      @if (!empty(session('cart')))
          <div class="row">
             @include('news.pages.product.child-cart.detail')
-            @include('news.pages.product.child-cart.total')
+            {{-- @include('news.pages.product.child-cart.total') --}}
          </div>
       @else
          <div class="row">

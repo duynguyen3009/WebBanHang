@@ -24,9 +24,16 @@ return [
     'cart' => [
         'message'       => 'Thêm sản phẩm vào giỏ hàng thành công !! ',
     ],
+    'remove' => [
+        'message'       => 'Xóa sản phẩm thành công !! ',
+    ],
     'price' => [
         'message'       => 'Thay đổi giá thành công !!',
-    ],'is_home'         => [
+    ],
+    'quantity' => [
+        'message'       => 'Thay đổi số lượng thành công !!',
+    ],
+    'is_home'         => [
         'yes'           => 'Hiển thị',
         'no'            => 'Không hiển thị',
         'warning'       => 'btn btn-round btn-warning',

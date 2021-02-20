@@ -304,7 +304,7 @@ class ProductModel extends AdminModel
             $result = self::insertGetId($this->prepareParams($params));
 
             // THÊM GIÁ TRỊ VÀO BẢNG PRICE_PRODUCT
-            if (isset($params['attribute_name_price_custom']) && $params['attribute_name_price_custom'] != null) {
+            if (isset($params['attribute_name_price_custom']) && $params['attribute_name_price_custom'] != 'default') {
                 $priceProductModel  = new PriceProductModel();
                 $attrGroupModel          = new AttributeGroupModel();
                 $nameAttr           =   $attrGroupModel->getItem($params['attribute_name_price_custom'], ['task' => 'admin-get-item-in-product']);

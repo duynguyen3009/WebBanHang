@@ -51,7 +51,7 @@
          </tfoot>
       </table>
       <div class="checkout-methods">
-         <a href="checkout-shipping.html" class="btn btn-block btn-sm btn-primary">Tiến hành đặt hàng</a>
+         <a href="{{ route('checkoutnews') }}" class="btn btn-block btn-sm btn-primary">Tiến hành đặt hàng</a>
          {{-- <a href="#" class="btn btn-link btn-block">Check Out with Multiple Addresses</a> --}}
       </div>
       <!-- End .checkout-methods -->

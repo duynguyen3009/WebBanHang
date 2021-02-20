@@ -9,9 +9,11 @@
     $linkYoutube                = $item['link'];
     $content                    = mb_substr($item['content'],1, 500);
     $tags                       = $item['tags'];
-    $active                     =   null;
+    $active                     = null;
     $attributeNamePriceCustom   = $item['attribute_name_price_custom'];
-
+    $promotion                  = $item['promotion'];
+    $valuePromotion             = $item['value_promotion'];
+   
     //XỬ LÝ GIÁ KHI CÓ VÀ KHÔNG CÓ KHUYẾN MÃI
     $arrPrice   = Template::showPrice($item);
     $priceOld   = $arrPrice['priceOld'];
@@ -37,6 +39,9 @@
     <input type="hidden" value="{{ $thumb }}" class="thumb_product">
     <input type="hidden" value="{{ $price }}" class="price_product">
     <input type="hidden" value="{{ $priceOld }}" class="price_old_product">
+    <input type="hidden" value="{{ $promotion }}" name="promotion">
+    <input type="hidden" value="{{ $valuePromotion }}" name="value_promotion">
+    {{-- <input type="hidden" value="{{ $item['attr_value'] }}" name="name_attr"> --}}
         <div class="ratings-container">
             <div class="product-ratings">
                 <span class="ratings" style="width:100%"></span>
@@ -68,13 +73,22 @@
                         $itemsAttr = $priceProductModel->listItems($params, ['task'=> 'list-item-by-product_id']);
                     @endphp
                 <ul class="config-size-list">
-                    @foreach ($itemsAttr as $key => $item)
-                        <li class="btn-attribute attribute"  name="{{$item['attr_name']}}"  data-id="{{$item['id']}}"  data-price="{{$item['price']}}">
-                            <a id="attribute-product" class="attribute-{{$item['id']}} name-attribute @if ($key == 0) bg-success @endif" href="#">{{$item['attr_value']}}</a>
-                        </li>
-                        
-                    @endforeach
+                    @if (!empty($itemsAttr))
+                        @foreach ($itemsAttr as $key => $item)
+                            <li class="btn-attribute "  name="{{$item['attr_name']}}" data-value="{{$item['attr_value']}}" data-id="{{$item['id']}}"  data-price="{{$item['price']}}">
+                                <a id="attribute-product" data-id="{{$item['id']}}" class="attribute-{{$item['id']}} name-attribute @if ($key == 0) bg-success @endif" href="#">{{$item['attr_value']}}</a>
+                            </li>
+                        @endforeach
                         <input type="hidden" name="id_price_product" class="id_price_product" value="{{ $itemsAttr[0]['id'] }}">
+                        @php
+                            $price = Template::showPricePromotion($promotion, $valuePromotion, $itemsAttr[0]['price']);
+                        @endphp
+                        <input type="hidden" name="id_attr" value="{{$itemsAttr[0]['id']}}">
+                        <input type="hidden" name="name_attr" value="{{$itemsAttr[0]['attr_value']}}">
+                        <input type="hidden" name="value_attr" value="{{$price}}">
+                    @endif
+                    
+                      
                 </ul><br>
                 {{-- @if (isset($item['price_custom']) && $item['price_custom'] !== null && $item['attribute'] == null)
                     <label>{!! $attributeNamePriceCustom !!}</label>
@@ -108,12 +122,21 @@
             </div><!-- End .product-single-qty -->
             @php
                $linkCart = route($controllerName .'/cart', [
-                                'id'                    =>  'new_value'
+                                'id'                    =>  'new_value',
+                                'id_attribute'        =>  'new_value1',
+                                'quantity'             => 'new_value2',
                             ]);
             @endphp
             <a href="#" class="paction add-cart" data-url="{{ $linkCart }}" title="Thêm vào giỏ hàng">
                 <span>Thêm vào giỏ hàng</span>
             </a>
+            {{-- <a href="{{ route($controllerName .'/cart', [
+                        'id'                    =>  $id,
+                        'id_attribute'        =>  $itemsAttr[1]['id'],
+                        'quantity'              => 3,
+                    ]) }}" class="paction add-carts" title="Thêm vào giỏ hàng">
+                <span>Thêm vào giỏ hàng</span>
+            </a> --}}
             
             {{-- <a href="#" class="paction add-wishlist" title="Add to Wishlist">
                 <span>Add to Wishlist</span>

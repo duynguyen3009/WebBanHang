@@ -451,4 +451,31 @@ class Template
 
         return ['price' => $price, 'priceOld' => $priceOld];
     }
+
+    public static function showPricePromotion($promotion, $valuePromotion, $price, $option = null){
+        if ($promotion == 'direct') {
+            $price -= $valuePromotion;
+        }else{
+            $price = $price - ($price / $valuePromotion);
+        }
+        return $price;
+    }
+
+    public static function countTotalQuantity($params = null){
+        $totalQuantity = 0;
+        if (!empty($params)) {
+            foreach($params as $key => $value){
+               if (is_array($value)) {
+                  foreach ($value as $keyC => $valueC) {
+                     $totalQuantity += $valueC;
+                  }
+               }
+            }
+            return $totalQuantity;
+        }
+    }
+
+    public static function showNumberFormatPrice($price = null){
+        return number_format($price) . ' VNĐ';
+    }
 }

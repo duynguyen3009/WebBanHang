@@ -37,38 +37,45 @@ class ProductfController extends Controller
 
    public function cart(Request $request)
    {
-      $cart = Session::get('cart');
+      $cart             = Session::get('cart');
       $productId        = $request->id;
-      $priceProductId   = $request->id_price_product;
       $quantity         = $request->quantity;
+      $id_attribute     = $request->id_attribute;
       $checkExistId = false;
       if (empty($cart)) {
-         $cart['quantity'][$productId] = $quantity;
+         $cart[$productId] = [$id_attribute => $quantity];
       } else {
-         if (key_exists($productId, $cart['quantity'])) {
+         if (key_exists($productId, $cart)) {
             $checkExistId = true;
-            $cart['quantity'][$productId] += $quantity;
+            if(key_exists($id_attribute, $cart[$productId])){
+               $cart[$productId][$id_attribute] += $quantity;
+            }else{
+               $cart[$productId][$id_attribute] = $quantity;
+            }
          } else {
-            $cart['quantity'][$productId] = $quantity;
+            $cart[$productId] = [$id_attribute => $quantity];
          }
-         unset($cart['quantity']['assets']);
       }
 
+      $totalQuantity = Template::countTotalQuantity($cart);
+      unset($cart['quantity']);
       session(['cart' => $cart]);
-      $item    = $this->model->getItem(['id' => $productId],                  ['task' => 'get-product-in-cart']);
-      $price   = $this->priceProductModel->getItem(['id' => $priceProductId], ['task' => 'get-item']);
-     
-      // $price = Template::showPrice($item);
       echo json_encode([
-         'checkId' => $checkExistId,
-         'message' => config('zvn-notify.cart.message'),
-         'quantity' => $quantity,
-         'product_id' => $productId,
-         'thumb' => asset("uploads/" . json_decode($item['thumb'])[0]),
-         'name' => $item['name'],
-         'price' => $price['price'],
-         'linkDeleteItem' => route($this->controllerName . '/deleteItemCart', ['id' => $productId]),
-      ]);
+            'totalQuantity' => $totalQuantity, 
+            'message'         => config('zvn-notify.cart.message'),
+         ] );
+      // echo json_encode([
+      //    'checkId'         => $checkExistId,
+      //    'message'         => config('zvn-notify.cart.message'),
+      //    'quantity'        => $quantity,
+      //    'product_id'      => $productId,
+      //    'thumb'           => asset("uploads/" . json_decode($item['thumb'])[0]),
+      //    'name'            => $item['name'],
+      //    // 'price'           => $price['price'],
+      //    'nameAttr'        => $nameAttr,
+      //    'valueAttr'        => $valueAttr,
+      //    'linkDeleteItem'  => route($this->controllerName . '/deleteItemCart', ['id' => $productId]),
+      // ]);
    }
 
    public function detailCart(Request $request)
@@ -86,26 +93,41 @@ class ProductfController extends Controller
 
    public function deleteItemCart(Request $request)
    {
-      $cart = Session::get('cart');
-      $productId = $request->id;
-      $quantity = $cart['quantity'][$productId];
-      unset($cart['quantity'][$productId]);
+      $cart       = Session::get('cart');
+      $productId  = $request->id;
+      $idAttr     = $request->id_attribute;
+      $quantity   = $request->quantity;
+      unset($cart[$productId][$idAttr]);
+      // nếu thuộc tính còn 1 giá trị thì xóa luôn cái id đó, còn không thì chỉ xóa thuộc tính
       session(['cart' => $cart]);
-      echo json_encode(['productId' => $productId, 'productQuantity' => $quantity]);
+      echo json_encode([
+            'quantity'           => $quantity,
+            'productId'          => $productId,
+            'idAttr'             => $idAttr,
+            'message'            => config('zvn-notify.remove.message'),
+         ] );
    }
 
    public function updateQuantity(Request $request)
    {
-      $cart = Session::get('cart');
-      $productId = $request->id;
-      $quantity = $request->quantity;
-      if (key_exists($productId, $cart['quantity'])) {
-         $cart['quantity'][$productId] = 0;
-         $cart['quantity'][$productId] += $quantity;
+      $cart       = Session::get('cart');
+      $productId  = $request->id;
+      $quantity   = $request->quantity;
+      $idAttr     = $request->id_attribute;
+     
+      if (key_exists($productId, $cart)) {
+         if(key_exists($idAttr, $cart[$productId])){
+            $cart[$productId][$idAttr] = $quantity;
+         }
+      } else {
+         $cart[$productId] = [$idAttr => $quantity];
       }
-      $quantity = $cart['quantity'][$productId];
+      $quantity = $cart[$productId][$idAttr];
       session(['cart' => $cart]);
-      echo json_encode(['productId' => $productId, 'productQuantity' => $quantity, 'cart' => $cart]);
+      echo json_encode([
+         'quantity'        => $quantity, 
+         'message'         => config('zvn-notify.quantity.message'),
+      ] );
    }
 
    public function getPriceShipping(Request $request)

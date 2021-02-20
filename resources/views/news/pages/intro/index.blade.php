@@ -74,31 +74,37 @@
 @section('title', 'Giới thiệu')
 @extends('news.main')
 @section('content')
-    
+@php
+    $mission        = config('zvn-intro.mission');
+    $history        = config('zvn-intro.history');
+    $opinion        = config('zvn-intro.opinion');
+    $owner          = config('zvn-intro.owner');
+    $description    = config('zvn-intro.description');
+    $avartar        = config('zvn-intro.avartar');
+@endphp
 <main class="main">
     <div class="introduce-container" >
         <div class="introduce-item" >
             <p class="title" >Sứ mệnh của chúng tôi</p>
-            <p class="description"> ipsum dolor sit amet consectetur adipisicing elit. Fugiat excepturi ea perspiciatis eius, repudiandae aliquid deleniti, veniam ducimus eveniet ab recusandae. Nulla velit dolore quasi nam quo ut libero minima!</p>
+            <p class="description"> {{$mission}}</p>
         </div>
         <div class="introduce-item">
             <p class="title">Lịch sử hình thành</p>
-            <p class="description"> ipsum dolor sit amet consectetur adipisicing elit. Fugiat excepturi ea perspiciatis eius, repudiandae aliquid deleniti, veniam ducimus eveniet ab recusandae. Nulla velit dolore quasi nam quo ut libero minima!</p>
+            <p class="description"> {{$history}}</p>
         </div>
         <div class="introduce-item">
             <p class="title">Quan điểm làm việc</p>
-            <p class="description"> ipsum dolor sit amet consectetur adipisicing elit. Fugiat excepturi ea perspiciatis eius, repudiandae aliquid deleniti, veniam ducimus eveniet ab recusandae. Nulla velit dolore quasi nam quo ut libero minima!</p>
+            <p class="description"> {{$opinion}}</p>
         </div>
         <div class="introduce-item person">
             {{-- <p class="title">Đội ngũ nhân sự</p> --}}
             <div class="image">
-                <img src="{{ asset('images/person/default.jpeg') }}" alt="">
+                <img src="{{ asset($avartar) }}" alt="">
             </div>
             <div class="info">
-                <p class="name">Nguyễn Đinh Duy</p>
-                <p class="description">Nhà sáng lập Guppy Store</p>
+                <p class="name">{{$owner}}</p>
+                <p class="description">{{$description}}</p>
                 <a href="#"><i class="fab fa-facebook    "></i></a>
-                
             </div>
         </div>
     </div>

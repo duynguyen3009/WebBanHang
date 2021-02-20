@@ -1,6 +1,6 @@
 <style>
    #attribute-product {
-      background: blue;
+      background: #b2b2ee;
       color: white;
       width: 100px; 
       border-radius: 5px;
